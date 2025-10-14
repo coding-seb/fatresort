@@ -106,7 +106,7 @@ class MP3Sorter(QWidget):
                 pass
 
     def load_folder(self):
-        folder = QFileDialog.getExistingDirectory(self, "Select USB Folder")
+        folder = QFileDialog.getExistingDirectory(parent=self, caption="Select USB Folder", directory='/media/')
         if folder:
             self.folder_path = folder
             self.tree_widget.setHeaderLabel("Lexicographic order and file structure")
