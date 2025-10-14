@@ -16,49 +16,6 @@ from PyQt6.QtWidgets import (
     QTreeWidgetItem,
 )
 
-# class FileTree(QTreeWidget):
-#     def __init__(self):
-#         super().__init__()
-#         self.setDragDropMode(self.DragDropMode.InternalMove)
-#         self.setSelectionMode(self.SelectionMode.ExtendedSelection)
-#         self.setHeaderLabel("USB Contents")
-#
-#     def dropEvent(self, event):
-#         target_item = self.itemAt(event.position().toPoint())
-#         dragged_items = self.selectedItems()
-#
-#         # If no target (e.g. dropping on empty area), allow it
-#         if not target_item:
-#             super().dropEvent(event)
-#             return
-#
-#         # Helper: determine if an item represents a folder or a file
-#         def is_folder(item):
-#             return item.data(0, 0) == "folder"
-#
-#         def is_file(item):
-#             return item.data(0, 0) == "file"
-#
-#         # Case 1: Dropping an MP3 onto another MP3 → BLOCK
-#         if is_file(target_item):
-#             QMessageBox.warning(self, "Invalid Drop", "You cannot drop an MP3 onto another MP3.")
-#             event.ignore()
-#             return
-#
-#         # Case 2: Dropping an MP3 into a different folder → BLOCK
-#         for src in dragged_items:
-#             parent = src.parent()
-#             if is_file(src):
-#                 # Find folder that will contain it
-#                 dest_folder = target_item if is_folder(target_item) else target_item.parent()
-#                 if parent != dest_folder:
-#                     QMessageBox.warning(self, "Invalid Move", "MP3 files can only be reordered within their own folder.")
-#                     event.ignore()
-#                     return
-#
-#         # Otherwise, allow normal internal move
-#         super().dropEvent(event)
-
 
 class MP3Sorter(QWidget):
     def __init__(self):
@@ -68,11 +25,6 @@ class MP3Sorter(QWidget):
 
         layout = QVBoxLayout()
         self.setLayout(layout)
-
-        # self.list_widget = QListWidget()
-        # self.list_widget.setSelectionMode(self.list_widget.SelectionMode.ExtendedSelection)
-        # self.list_widget.setDragDropMode(self.list_widget.DragDropMode.InternalMove)
-        # layout.addWidget(self.list_widget)
 
         self.tree_widget = QTreeWidget()
         self.tree_widget.setSelectionMode(
