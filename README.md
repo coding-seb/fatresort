@@ -5,7 +5,7 @@ This is helpful for car stereos that play files in alphabetical order.
 
 Currently only supports alphabetical ordering and no custom order.
 
-To install dependencies:
+To install dependencies (currently only PyQt6):
 ```bash
 pip install -r requirements.txt
 ```
