@@ -1,14 +1,16 @@
 # fatresort
 
-Actually I recommend using https://github.com/lhrios/yafs or the GUI version https://www.luisrios.eti.br/public/en_us/projects/visual_yafs/
-To install it with recent java you need javaFX. Install it with 
+GUI for managing the order of .mp3 files on a FAT filesystem like a USB stick. 
+This is helpful for car stereos that play files in alphabetical order.
 
-`sudo apt install openjfx`
+Currently only supports alphabetical ordering and no custom order.
 
-Then you can run the GUI with 
+To install dependencies:
+```bash
+pip install -r requirements.txt
+```
 
-`java --module-path /usr/share/openjfx/lib --add-modules javafx.controls,javafx.fxml -jar visual_yafs.jar`
-
-If you entcounter the error `/tmp/visual_yafs/2019_11_03/yafs/yafs`file or directory not found, install 32bit libraries
-
-`sudo apt install libc6:i386 libstdc++6:i386 zlib1g:i386`
+To run the application:
+```bash
+python src/fatresort/gui.py
+```
