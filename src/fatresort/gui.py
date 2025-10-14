@@ -6,7 +6,14 @@ from pathlib import Path
 
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
-    QApplication, QWidget, QVBoxLayout, QListWidget, QPushButton, QFileDialog, QMessageBox, QTreeWidget, QTreeWidgetItem
+    QApplication,
+    QWidget,
+    QVBoxLayout,
+    QPushButton,
+    QFileDialog,
+    QMessageBox,
+    QTreeWidget,
+    QTreeWidgetItem,
 )
 
 # class FileTree(QTreeWidget):
@@ -68,7 +75,9 @@ class MP3Sorter(QWidget):
         # layout.addWidget(self.list_widget)
 
         self.tree_widget = QTreeWidget()
-        self.tree_widget.setSelectionMode(self.tree_widget.SelectionMode.ExtendedSelection)
+        self.tree_widget.setSelectionMode(
+            self.tree_widget.SelectionMode.ExtendedSelection
+        )
         self.tree_widget.setDragDropMode(self.tree_widget.DragDropMode.InternalMove)
         self.tree_widget.setHeaderLabels(["No folder selected"])
         layout.addWidget(self.tree_widget)
@@ -83,8 +92,7 @@ class MP3Sorter(QWidget):
         self.save_button.setEnabled(False)
         self.folder_path = None
 
-    def append_folder(self, parent_item:QTreeWidgetItem, folder_path:str):
-
+    def append_folder(self, parent_item: QTreeWidgetItem, folder_path: str):
         for f in sorted(os.listdir(folder_path)):
             path = os.path.join(folder_path, f)
             if os.path.isdir(path):
@@ -111,14 +119,18 @@ class MP3Sorter(QWidget):
 
     def apply_order(self):
         self.save_button.setEnabled(False)
-        confirm = QMessageBox.question(self, "Confirm", "Re-copy files in set order? Note that this needs the same diskspace on the computer as the current files.")
+        confirm = QMessageBox.question(
+            self,
+            "Confirm",
+            "Re-copy files in set order? Note that this needs the same diskspace on the computer as the current files.",
+        )
         if confirm != QMessageBox.StandardButton.Yes:
             return
         with tempfile.TemporaryDirectory() as temp_dir:
             os.makedirs(temp_dir, exist_ok=True)
 
             # Copy all files to tmp dir
-            top_item:QTreeWidgetItem = self.tree_widget.topLevelItem(0)
+            top_item: QTreeWidgetItem = self.tree_widget.topLevelItem(0)
             root_path = Path(top_item.text(0))
             shutil.copytree(root_path, temp_dir, dirs_exist_ok=True)
 
@@ -130,7 +142,7 @@ class MP3Sorter(QWidget):
 
         QMessageBox.information(self, "Done", "Files reordered successfully!")
 
-    def copy_folder(self, item:QTreeWidgetItem, base_path: Path, tmp_dir: str):
+    def copy_folder(self, item: QTreeWidgetItem, base_path: Path, tmp_dir: str):
         base_path = base_path / item.text(0)
         os.makedirs(base_path, exist_ok=True)
         for i in range(item.childCount()):
@@ -142,7 +154,11 @@ class MP3Sorter(QWidget):
                 shutil.copy2(src_file, dst_file)
             else:
                 # Folder
-                self.copy_folder(item=child, base_path=base_path, tmp_dir=os.path.join(tmp_dir, child.text(0)))
+                self.copy_folder(
+                    item=child,
+                    base_path=base_path,
+                    tmp_dir=os.path.join(tmp_dir, child.text(0)),
+                )
 
     @staticmethod
     def delete_folder_contents(path: Path):
