@@ -21,7 +21,9 @@ from PyQt6.QtWidgets import (
 import os
 
 lang = os.getenv("LANG")
-locale_dir = Path("./locale")
+locale_dir = Path(os.path.dirname(os.path.realpath(__file__))).joinpath(
+    Path("./locale")
+)
 
 
 class MP3Sorter(QWidget):
