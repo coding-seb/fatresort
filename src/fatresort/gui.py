@@ -1,8 +1,9 @@
 import sys
-import os
 import shutil
 import tempfile
 from pathlib import Path
+
+import gettext
 
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
@@ -16,11 +17,18 @@ from PyQt6.QtWidgets import (
     QTreeWidgetItem,
 )
 
+import os
+lang = os.getenv('LANG')
+locale_dir = Path("./locale")
+
 
 class MP3Sorter(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("USB MP3 Sorter")
+
+        self.install_language()
+
+        self.setWindowTitle(_("USB MP3 Sorter"))
         self.resize(400, 500)
 
         layout = QVBoxLayout()
@@ -31,11 +39,11 @@ class MP3Sorter(QWidget):
             self.tree_widget.SelectionMode.ExtendedSelection
         )
         self.tree_widget.setDragDropMode(self.tree_widget.DragDropMode.InternalMove)
-        self.tree_widget.setHeaderLabels(["No folder selected"])
+        self.tree_widget.setHeaderLabel(_("No folder selected"))
         layout.addWidget(self.tree_widget)
 
-        self.load_button = QPushButton("Load USB Folder")
-        self.save_button = QPushButton("Apply Order")
+        self.load_button = QPushButton(_("Load USB Folder"))
+        self.save_button = QPushButton(_("Apply order"))
         layout.addWidget(self.load_button)
         layout.addWidget(self.save_button)
 
@@ -43,6 +51,17 @@ class MP3Sorter(QWidget):
         self.save_button.clicked.connect(self.apply_order)
         self.save_button.setEnabled(False)
         self.folder_path = None
+
+    @staticmethod
+    def install_language():
+        if lang and lang.startswith('de'):
+            gettext.bindtextdomain(domain="gui", localedir=locale_dir)
+            gettext.textdomain(domain="gui")
+
+            german = gettext.translation(domain="gui", localedir=locale_dir, languages=["de"])
+            german.install()
+            _ = german.gettext
+            print(_("German language installed"))
 
     def append_folder(self, parent_item: QTreeWidgetItem, folder_path: str):
         for f in sorted(os.listdir(folder_path)):
@@ -57,11 +76,11 @@ class MP3Sorter(QWidget):
 
     def load_folder(self):
         folder = QFileDialog.getExistingDirectory(
-            parent=self, caption="Select USB Folder", directory="/media/"
+            parent=self, caption=_("Select USB Folder"), directory="/media/"
         )
         if folder:
             self.folder_path = folder
-            self.tree_widget.setHeaderLabel("Lexicographic order and file structure")
+            self.tree_widget.setHeaderLabel(_("Lexicographic order and file structure"))
             self.tree_widget.clear()
             root_item = QTreeWidgetItem([folder])
             self.append_folder(parent_item=root_item, folder_path=folder)
@@ -92,7 +111,7 @@ class MP3Sorter(QWidget):
             # Go through tree in order and copy files back to drive
             self.copy_folder(item=top_item, base_path=root_path, tmp_dir=temp_dir)
 
-        QMessageBox.information(self, "Done", "Files reordered successfully!")
+        QMessageBox.information(self, "Done", _("Files reordered successfully!"))
 
     def copy_folder(self, item: QTreeWidgetItem, base_path: Path, tmp_dir: str):
         base_path = base_path / item.text(0)

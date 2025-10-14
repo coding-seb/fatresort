@@ -1,0 +1,41 @@
+# German translation for app
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: de\n"
+
+msgid "USB MP3 Sorter"
+msgstr "USB MP3 Sortierer"
+
+msgid "No folder selected"
+msgstr "Kein Ordner ausgewählt"
+
+msgid "Load USB Folder"
+msgstr "USB Ordner auswählen"
+
+msgid "Apply order"
+msgstr "Reihenfolge anwenden"
+
+msgid "Select USB Folder"
+msgstr "USB Ordner auswählen"
+
+msgid "Lexicographic order and file structure"
+msgstr "Lexikographische Reihenfolge und Dateistruktur"
+
+msgid "Confirm"
+msgstr "Bestätigen"
+
+msgid "Re-copy files in set order? Note that this needs the same diskspace on the computer as the current files."
+msgstr "Dateien in der festgelegten Reihenfolge neu kopieren? Beachten Sie, dass dies den gleichen Speicherplatz auf dem Computer benötigt wie die aktuellen Dateien."
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgid "Files reordered successfully"
+msgstr "Dateien erfolgreich neu geordnet"
+
+msgid "Error"
+msgstr "Fehler"
+
+msgid "Done"
+msgstr "Fertig"
