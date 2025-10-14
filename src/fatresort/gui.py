@@ -135,7 +135,7 @@ class MP3Sorter(QWidget):
             shutil.copytree(root_path, temp_dir, dirs_exist_ok=True)
 
             # Delete all files on drive
-            shutil.rmtree(root_path)
+            self.delete_folder_contents(path=root_path)
 
             # Go through tree in order and copy files back to drive
             self.copy_folder(item=top_item, base_path=root_path, tmp_dir=temp_dir)
@@ -159,6 +159,15 @@ class MP3Sorter(QWidget):
                     base_path=base_path,
                     tmp_dir=os.path.join(tmp_dir, child.text(0)),
                 )
+
+    @staticmethod
+    def delete_folder_contents(path: Path):
+        for f in os.listdir(path):
+            full_path = os.path.join(path, f)
+            if os.path.isdir(full_path):
+                shutil.rmtree(full_path)
+            else:
+                os.remove(full_path)
 
 
 if __name__ == "__main__":
