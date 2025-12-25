@@ -103,8 +103,8 @@ class MP3Sorter(QWidget):
         self.save_button.setEnabled(False)
         confirm = QMessageBox.question(
             self,
-            "Confirm",
-            "Re-copy files in set order? Note that this needs the same diskspace on the computer as the current files.",
+            title="Confirm",
+            text=self.translate("Re-copy files in set order? Note that this needs the same diskspace on the computer as the current files."),
         )
         if confirm != QMessageBox.StandardButton.Yes:
             return
@@ -114,6 +114,7 @@ class MP3Sorter(QWidget):
             progress_bar.setValue(0)
 
             self.layout.addWidget(progress_bar)
+            QApplication.processEvents()  # allow Qt to repaint and handle events
 
             # # Simulate progress while allowing the UI to update
             # for current_value in range(0, progress_bar.maximum() + 1, 2):
@@ -124,22 +125,23 @@ class MP3Sorter(QWidget):
             os.makedirs(temp_dir, exist_ok=True)
 
             progress_bar.setValue(10)
+            QApplication.processEvents()  # allow Qt to repaint and handle events
 
             # Copy all files to tmp dir
             top_item: QTreeWidgetItem = self.tree_widget.topLevelItem(0)
             root_path = Path(top_item.text(0))
             shutil.copytree(root_path, temp_dir, dirs_exist_ok=True)
-
+            QApplication.processEvents()  # allow Qt to repaint and handle events
             progress_bar.setValue(60)
 
             # Delete all files on drive
             self.delete_folder_contents(path=root_path)
-
+            QApplication.processEvents()  # allow Qt to repaint and handle events
             progress_bar.setValue(70)
 
             # Go through tree in order and copy files back to drive
             self.copy_folder(item=top_item, base_path=root_path, tmp_dir=temp_dir)
-
+            QApplication.processEvents()  # allow Qt to repaint and handle events
             progress_bar.setValue(100)
 
         QMessageBox.information(
