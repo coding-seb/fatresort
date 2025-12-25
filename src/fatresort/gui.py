@@ -103,7 +103,7 @@ class MP3Sorter(QWidget):
         self.save_button.setEnabled(False)
         confirm = QMessageBox.question(
             self,
-            "Confirm",
+            self.translate("Confirm"),
             self.translate("Re-copy files in set order? Note that this needs the same diskspace on the computer as the current files."),
         )
         if confirm != QMessageBox.StandardButton.Yes:
