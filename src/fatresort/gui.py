@@ -1,7 +1,6 @@
 import sys
 import shutil
 import tempfile
-import time
 from pathlib import Path
 
 import gettext
@@ -16,7 +15,8 @@ from PyQt6.QtWidgets import (
     QFileDialog,
     QMessageBox,
     QTreeWidget,
-    QTreeWidgetItem, QProgressBar,
+    QTreeWidgetItem,
+    QProgressBar,
 )
 
 import os
@@ -104,7 +104,9 @@ class MP3Sorter(QWidget):
         confirm = QMessageBox.question(
             self,
             self.translate("Confirm"),
-            self.translate("Re-copy files in set order? Note that this needs the same diskspace on the computer as the current files."),
+            self.translate(
+                "Re-copy files in set order? Note that this needs the same diskspace on the computer as the current files."
+            ),
         )
         if confirm != QMessageBox.StandardButton.Yes:
             return
@@ -115,12 +117,6 @@ class MP3Sorter(QWidget):
 
             self.layout.addWidget(progress_bar)
             QApplication.processEvents()  # allow Qt to repaint and handle events
-
-            # # Simulate progress while allowing the UI to update
-            # for current_value in range(0, progress_bar.maximum() + 1, 2):
-            #     progress_bar.setValue(current_value)
-            #     QApplication.processEvents()  # allow Qt to repaint and handle events
-            #     time.sleep(0.05)  # brief pause for visible progress (keeps simulation)
 
             os.makedirs(temp_dir, exist_ok=True)
 
