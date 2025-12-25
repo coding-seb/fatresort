@@ -145,7 +145,7 @@ class MP3Sorter(QWidget):
             progress_bar.setValue(100)
 
         QMessageBox.information(
-            self, "Done", self.translate("Files reordered successfully")
+            self, self.translate("Done"), self.translate("Files reordered successfully")
         )
 
         self.layout.removeWidget(progress_bar)
